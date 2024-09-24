@@ -44,170 +44,224 @@ ul {
 
 /* Font styles */
 .montserrat-fontname {
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 242;
-    font-style: normal;
-  }
-  
-  /* Container styles */
-  .container {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 20px;
-  }
-  
-  /* Center the content and add transition animation */
-  .container-mid {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      transition: transform 0.5s ease-in-out;
-  }
-  
-  .container.centered-mid {
-      transform: translateY(0);
-  }
-  
-  .container.hidden-mid {
-      transform: translateY(-100%);
-      opacity: 0;
-  }
-  
-  /* Grid layout styles */
-  .main-content {
-      display: flex;
-      flex-direction: column;
-      width: 80%;
-      max-width: 1200px;
-      margin: 0 auto;
-  }
-  
-  .news-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 100%;
-  }
-  
-  .news-item {
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform 0.3s ease;
-  }
-  
-  .news-item img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-      margin-bottom: 10px;
-  }
-  
-  .news-item h3 {
-      font-size: 1em;
-      margin: 10px 0;
-  }
-  
-  .news-item:hover {
-      transform: translateY(-5px);
-  }
-  
-  .main-news {
-      grid-column: span 3;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-  }
-  
-  .main-news img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-      margin-bottom: 20px;
-  }
-  
-  .main-news h3 {
-      font-size: 1.5em;
-      margin: 20px 0;
-  }
-  
-  /* Sidebar styles */
-  .sidebar {
-      width: 20%;
-      padding: 20px;
-      box-sizing: border-box;
-      background-color: #f9f9f9;
-      border-left: 1px solid #ccc;
-  }
-  
-  /* Navbar styles */
-  .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      background-color: #333;
-      padding: 10px;
-      box-sizing: border-box;
-  }
-  
-  .navbar-item {
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-  }
-  
-  .navbar-item:hover {
-      background-color: #555;
-  }
-  
-  .navbar-links {
-      display: flex;
-      gap: 10px;
-  }
-  
-  .account {
-      margin-left: auto;
-  }
-  
-  /* Show More button styles */
-  .show-more-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-  }
-  
-  #show-more-btn {
-      padding: 10px 20px;
-      font-size: 1em;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  }
-  
-  #show-more-btn:hover {
-      background-color: #0056b3;
-  }  
-  
-  .popup {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 242;
+  font-style: normal;
+}
+
+/* Container styles */
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+/* Center the content and add transition animation */
+.container-mid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: transform 0.5s ease-in-out;
+}
+
+.container.centered-mid {
+    transform: translateY(0);
+}
+
+.container.hidden-mid {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+/* Grid layout styles */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.news-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.news-item {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.news-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.news-item h3 {
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+.news-item:hover {
+    transform: translateY(-5px);
+}
+
+.main-news {
+    grid-column: span 3;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.main-news img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.main-news h3 {
+    font-size: 1.5em;
+    margin: 20px 0;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border-left: 1px solid #ccc;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.navbar-item {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar-item:hover {
+    background-color: #555;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar-buttons button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.account {
+    margin-left: auto;
+}
+
+/* Full-width line styles */
+.full-width-line {
+    width: 95%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+}
+
+/* Show More button styles */
+.show-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#show-more-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#show-more-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .navbar {
+    background-color: #1f1f1f;
+}
+
+body.dark-mode .news-item, body.dark-mode .main-news {
+    background-color: #1f1f1f;
+    border-color: #333;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1f1f1f;
+    border-color: #333;
+}
+
+.popup {
     display: none;
     position: fixed;
     top: 50%;

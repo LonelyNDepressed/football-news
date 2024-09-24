@@ -10,7 +10,7 @@ const subsequentPageSize = 12; // Number of articles to fetch on subsequent load
 async function fetchFootballNews(page = 1) {
     const pageSize = page === 1 ? initialPageSize : subsequentPageSize;
     try {
-        const response = await fetch(`https://newsapi.org/v2/everything?q=football OR "football transfer" NOT "American football" NOT "NFL" NOT "college football" NOT "Taylor Swift" NOT "accident" NOT "sued"&pageSize=${pageSize}&page=${page}&apiKey=${newsApiKey}`);
+        const response = await fetch(`https://newsapi.org/v2/everything?q=football OR "football transfer" NOT "American football" NOT "NFL" NOT "college football" NOT "Taylor Swift" NOT "accident" NOT "sued"&language=en&pageSize=${pageSize}&page=${page}&apiKey=${newsApiKey}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -102,11 +102,29 @@ function displayStandings(data) {
     });
 }
 
-// Fetch and display football news on page load
-fetchFootballNews();
+// Function to toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+}
 
-// Fetch the selected team from localStorage and display it
+// Function to show popup
+function showPopup(content) {
+    const popup = document.querySelector('.popup');
+    popup.innerHTML = content;
+    popup.style.display = 'block';
+}
+
+// Function to hide popup
+function hidePopup() {
+    const popup = document.querySelector('.popup');
+    popup.style.display = 'none';
+}
+
+// Fetch and display football news on page load
 document.addEventListener('DOMContentLoaded', () => {
+    fetchFootballNews();
+
+    // Fetch the selected team from localStorage and display it
     const selectedTeamId = localStorage.getItem('selectedTeamId');
     const selectedTeamName = localStorage.getItem('selectedTeamName');
     if (selectedTeamId) {
@@ -115,6 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         document.getElementById('selected-team').innerText = 'No team selected';
     }
+
+    // Event listener for "Show More" button
+    document.getElementById('show-more-btn').addEventListener('click', () => {
+        currentPage++;
+        fetchFootballNews(currentPage);
+    });
+
+    // Event listener for dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+    // Event listener for popup close
+    document.querySelector('.popup').addEventListener('click', hidePopup);
 });
 
 document.getElementById('save-team-btn').addEventListener('click', () => {
@@ -124,10 +154,4 @@ document.getElementById('save-team-btn').addEventListener('click', () => {
     localStorage.setItem('selectedTeamId', selectedTeamId);
     localStorage.setItem('selectedTeamName', selectedTeamName);
     alert('Team saved!');
-});
-
-// Event listener for "Show More" button
-document.getElementById('show-more-btn').addEventListener('click', () => {
-    currentPage++;
-    fetchFootballNews(currentPage);
 });

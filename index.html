@@ -6,18 +6,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,242;1,242&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/app.js"></script>
     <title>Football News and Team Standings</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Football News and Team Standings</h1>
+        <hr class="full-width-line">
         <nav class="navbar">
             <div class="navbar-links">
                 <a href="index.html" class="navbar-item">Home</a>
                 <a href="your_team.html" class="navbar-item">Your Team</a>
             </div>
-            <a href="account.html" class="navbar-item account">Account</a>
+            <div class="navbar-buttons">
+                <button id="language-btn">Language</button>
+                <button id="theme-btn">Light/Dark Mode</button>
+                <a href="account.html" class="navbar-item account">Account</a>
+            </div>
         </nav>
     </header>
 
@@ -26,7 +32,7 @@
         <section class="main-content">
             <div id="news-container" class="news-container"></div>
             <div id="show-more-container" class="show-more-container">
-                <button id="show-more-btn" style="display: none;">Show More</button>
+                <button id="show-more-btn">Show More</button>
             </div>
         </section>
         <!-- Team Data Section -->
@@ -35,7 +41,5 @@
             <div id="selected-team"></div>
         </section>
     </div>
-
-    <script src="app.js"></script>
 </body>
 </html>
