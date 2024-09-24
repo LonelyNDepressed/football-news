@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,242;1,242&display=swap" rel="stylesheet">
+    <title>Your Team</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Your Team</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a class="active" href="your_team.html">Your Team</a></li>
+                <li style="float:right"><a href="account.html">Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container-mid">
+        <!-- Team Selection Section -->
+        <section class="sidebar">
+            <h2>Select a Team</h2>
+            <button id="select-country-btn">Select Country from Map</button>
+            <select id="team-select">
+                <option value="64">Liverpool FC</option>
+                <option value="65">Manchester City FC</option>
+                <!-- Add more teams here -->
+            </select>
+            <button id="save-team-btn">Save Team</button>
+        </section>
+
+        <!-- Popup Section -->
+        <div class="popup" id="team-popup">
+            <div class="popup-header">
+                <h2>Team Details</h2>
+                <span class="popup-close" id="popup-close-btn">&times;</span>
+            </div>
+            <div class="popup-content" id="popup-content">
+                <!-- Team details go here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
