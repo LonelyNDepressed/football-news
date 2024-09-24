@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,242;1,242&display=swap" rel="stylesheet">
     <title>Football News and Team Standings</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="app.js"></script>
 </head>
 <body>
     <header>
         <h1>Football News and Team Standings</h1>
+        <nav class="navbar">
+            <div class="navbar-links">
+                <a href="index.html" class="navbar-item">Home</a>
+                <a href="your_team.html" class="navbar-item">Your Team</a>
+            </div>
+            <a href="account.html" class="navbar-item account">Account</a>
+        </nav>
     </header>
 
-    <!-- News Section -->
-    <section>
-        <h2>Latest Football News</h2>
-        <div id="news-container" class="news-container news-grid"></div>
-    </section>
+    <div class="container">
+        <!-- Main content goes here -->
+        <section class="main-content">
+            <div id="news-container" class="news-container"></div>
+            <div id="show-more-container" class="show-more-container">
+                <button id="show-more-btn" style="display: none;">Show More</button>
+            </div>
+        </section>
+        <!-- Team Data Section -->
+        <section class="sidebar">
+            <h2>Selected Team</h2>
+            <div id="selected-team"></div>
+        </section>
+    </div>
 
-    <!-- Team Data Section -->
-    <section>
-        <h2>Select a Team to View Leagues and Standings</h2>
-        <select id="team-select">
-            <option value="64">Liverpool FC</option>
-            <option value="65">Manchester City FC</option>
-            <!-- Add more teams here -->
-        </select>
-        <div id="team-leagues"></div>
-    </section>
+    <script src="app.js"></script>
 </body>
 </html>

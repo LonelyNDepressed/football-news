@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,242;1,242&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <title>Account</title>
+</head>
+<body>
+
+<header>
+    <h1>Create Account</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="your_team.html">Your Team</a></li>
+            <li style="float:right"><a class="active" href="account.html">Account</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+
+<div>
+    <h2>Register</h2>
+    <input type="text" placeholder="Username or Email">
+    <input type="password" placeholder="Password">
+    <button onclick="register()">Register</button>
+
+    <h2>Login</h2>
+    <input type="text" placeholder="Username or Email">
+    <input type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <div>
+        <h2>Or sign in with:</h2>
+        <button onclick="signInWithGoogle()">Google</button>        
+        <button onclick="signInWithFacebook()">Facebook</button>
+        <button onclick="signInWithApple()">Apple ID</button>
+    </div>
+</div>
+
+</body>
+</html>
