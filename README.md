@@ -29,10 +29,14 @@ npm test         # run the Vitest suite
 
 ## Deploy
 
+Live at **[tbhhelper.help](https://tbhhelper.help/)**.
+
 A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds, tests, and deploys to **GitHub
-Pages** on every push to `main`. To go live: enable Pages (Settings → Pages → Source: GitHub
-Actions). The relative base path means it also drops straight onto Netlify/Vercel/any static host —
-just point them at `npm run build` and the `dist/` folder.
+Pages** on every push to `main`. The custom domain is wired via `public/CNAME` (`tbhhelper.help`).
+To go live: enable Pages (Settings → Pages → Source: GitHub Actions) and point the domain's DNS at
+GitHub Pages (apex `A`/`AAAA` records, or a `CNAME` for `www`). The relative base path means it
+also drops straight onto Netlify/Vercel/any static host — just point them at `npm run build` and the
+`dist/` folder.
 
 ## How it works
 

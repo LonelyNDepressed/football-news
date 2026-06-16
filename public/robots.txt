@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lonelyndepressed.github.io/football-news/sitemap.xml
+Sitemap: https://tbhhelper.help/sitemap.xml
