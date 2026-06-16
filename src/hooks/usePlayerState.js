@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { readStateFromUrl, clearUrlState } from '../lib/share.js'
 
 const STORAGE_KEY = 'tbh-strategist-state-v1'
 
@@ -16,6 +17,12 @@ export const DEFAULT_STATE = {
 }
 
 function load() {
+  // A build code in the URL hash wins over saved state (someone followed a share link).
+  const fromUrl = readStateFromUrl()
+  if (fromUrl) {
+    clearUrlState()
+    return fromUrl
+  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return DEFAULT_STATE
@@ -98,5 +105,10 @@ export function usePlayerState() {
     }
   }, [])
 
-  return { state, update, toggleHero, setHeroStat, toggleRune, reset }
+  // Replace the whole state (used by Import / share-link loading).
+  const importState = useCallback((next) => {
+    setState({ ...DEFAULT_STATE, ...next, heroStats: { ...(next.heroStats || {}) } })
+  }, [])
+
+  return { state, update, toggleHero, setHeroStat, toggleRune, reset, importState }
 }

@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { usePlayerState } from './hooks/usePlayerState.js'
 import TopBar from './components/TopBar.jsx'
 import Footer from './components/Footer.jsx'
+import ShareBar from './components/ShareBar.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 import NextBestAction from './components/tabs/NextBestAction.jsx'
+import TeamOptimizer from './components/tabs/TeamOptimizer.jsx'
 import HeroBuilds from './components/tabs/HeroBuilds.jsx'
 import FarmingAdvisor from './components/tabs/FarmingAdvisor.jsx'
 import RuneAdvisor from './components/tabs/RuneAdvisor.jsx'
@@ -10,12 +13,13 @@ import GearCompare from './components/tabs/GearCompare.jsx'
 import ItemGuide from './components/tabs/ItemGuide.jsx'
 
 const TABS = [
-  { id: 'next', label: 'Next Best Action', icon: '🎯', Component: NextBestAction, needsState: true },
-  { id: 'heroes', label: 'Per-Hero Builds', icon: '⚔️', Component: HeroBuilds, needsState: true },
-  { id: 'farming', label: 'Farming Advisor', icon: '🌾', Component: FarmingAdvisor, needsState: true },
-  { id: 'runes', label: 'Rune Advisor', icon: '🔮', Component: RuneAdvisor, needsState: true },
-  { id: 'gear', label: 'Gear Compare', icon: '🛡️', Component: GearCompare, needsState: false },
-  { id: 'items', label: 'Item Guide', icon: '🧊', Component: ItemGuide, needsState: false },
+  { id: 'next', label: 'Next Best Action', icon: '🎯', Component: NextBestAction },
+  { id: 'team', label: 'Team Optimizer', icon: '🧩', Component: TeamOptimizer },
+  { id: 'heroes', label: 'Per-Hero Builds', icon: '⚔️', Component: HeroBuilds },
+  { id: 'farming', label: 'Farming Advisor', icon: '🌾', Component: FarmingAdvisor },
+  { id: 'runes', label: 'Rune Advisor', icon: '🔮', Component: RuneAdvisor },
+  { id: 'gear', label: 'Gear Compare', icon: '🛡️', Component: GearCompare },
+  { id: 'items', label: 'Item Guide', icon: '🧊', Component: ItemGuide },
 ]
 
 export default function App() {
@@ -35,25 +39,36 @@ export default function App() {
           <QuickStart onClose={() => setShowGuide(false)} goTo={setActive} state={player.state} />
         )}
 
-        {/* Tab nav */}
-        <nav className="mb-5 flex gap-1 overflow-x-auto rounded-xl border border-navy-700/70 bg-navy-900/60 p-1">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setActive(t.id)}
-              className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition ${
-                active === t.id
-                  ? 'bg-gold-500/15 text-gold-300 shadow-glow'
-                  : 'text-slate-400 hover:bg-navy-800 hover:text-slate-200'
-              }`}
-            >
-              <span>{t.icon}</span>
-              <span className="hidden sm:inline">{t.label}</span>
-            </button>
-          ))}
-        </nav>
+        {/* Tab nav + share controls */}
+        <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <nav
+            className="flex gap-1 overflow-x-auto rounded-xl border border-navy-700/70 bg-navy-900/60 p-1"
+            aria-label="Dashboard sections"
+          >
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setActive(t.id)}
+                aria-current={active === t.id ? 'page' : undefined}
+                className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition ${
+                  active === t.id
+                    ? 'bg-gold-500/15 text-gold-300 shadow-glow'
+                    : 'text-slate-400 hover:bg-navy-800 hover:text-slate-200'
+                }`}
+              >
+                <span aria-hidden="true">{t.icon}</span>
+                <span className="hidden sm:inline">{t.label}</span>
+              </button>
+            ))}
+          </nav>
+          <div className="shrink-0">
+            <ShareBar state={player.state} onImport={player.importState} />
+          </div>
+        </div>
 
-        <Component state={player.state} />
+        <ErrorBoundary onReset={() => setActive('next')}>
+          <Component state={player.state} />
+        </ErrorBoundary>
       </main>
 
       <Footer />
@@ -88,15 +103,15 @@ function QuickStart({ onClose, goTo, state }) {
         />
         <PathCard
           step="2"
-          title="Returning player?"
-          body="Your inputs auto-saved last time. Update your gold, stage, and any new heroes, then check your verdict."
-          action="See Next Best Action"
-          onClick={() => goTo('next')}
+          title="Which heroes to run?"
+          body="Once your roster is in, the Team Optimizer picks the single strongest party you can field — and what to chase next."
+          action="Open Team Optimizer"
+          onClick={() => goTo('team')}
         />
         <PathCard
           step="3"
           title="Just optimizing?"
-          body="Compare two gear drops or read the rune priority and item-acquisition routes directly."
+          body="Compare two gear drops, read the rune priority, or share your build with a link — no full setup needed."
           action="Open Gear Compare"
           onClick={() => goTo('gear')}
         />

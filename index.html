@@ -2,18 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="TBH Strategist — companion dashboard for TBH: Task Bar Hero. Optimal builds, farming, runes, and gear advice."
+      content="TBH Strategist — the companion dashboard for TBH: Task Bar Hero. Get your best team comp, per-hero builds, farming and rune priority, gear comparison, and the single fastest next step from your own progress. Free, offline-capable, no login."
     />
+    <meta
+      name="keywords"
+      content="TBH, Task Bar Hero, TBH guide, TBH strategist, TBH best heroes, TBH rune order, TBH builds, idle game companion, Tesseract Studio"
+    />
+    <meta name="theme-color" content="#0b1124" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://lonelyndepressed.github.io/football-news/" />
+
+    <!-- Icons & PWA -->
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TBH Strategist" />
+    <meta property="og:title" content="TBH Strategist — Task Bar Hero Companion" />
+    <meta
+      property="og:description"
+      content="Your best team, builds, farming plan, rune order, and the single fastest next step — computed from your own TBH progress. Free & offline-capable."
+    />
+    <meta property="og:image" content="./icon.svg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="TBH Strategist — Task Bar Hero Companion" />
+    <meta
+      name="twitter:description"
+      content="The fastest path to advance in TBH: Task Bar Hero, computed from your own progress."
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>TBH Strategist — Task Bar Hero Companion</title>
+    <title>TBH Strategist — Task Bar Hero Companion & Build Optimizer</title>
+
+    <!-- Structured data for richer search results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TBH Strategist",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any (web)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Companion and optimization dashboard for the idle game TBH: Task Bar Hero."
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

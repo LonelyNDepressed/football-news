@@ -1,0 +1,20 @@
+{
+  "name": "TBH Strategist — Task Bar Hero Companion",
+  "short_name": "TBH Strategist",
+  "description": "Optimization dashboard for TBH: Task Bar Hero. Best builds, comps, farming, runes, and gear advice from your entered progress.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#070b18",
+  "theme_color": "#0b1124",
+  "categories": ["games", "utilities"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -133,10 +133,32 @@ export function runeQueue(ownedRuneIds, gold, slotsUnlocked = 1) {
   }
 }
 
-/** Number coercion that treats blanks/NaN as 0. */
+/** Number coercion that treats blanks/NaN as 0. Strips commas/spaces. */
 export function num(v) {
-  const n = typeof v === 'number' ? v : parseFloat(v)
+  if (typeof v === 'number') return Number.isFinite(v) ? v : 0
+  if (v == null) return 0
+  const n = parseFloat(String(v).replace(/[,\s]/g, ''))
   return Number.isFinite(n) ? n : 0
+}
+
+/**
+ * Parse human shorthand for big numbers: "1.5m" -> 1_500_000, "2k", "3.4b",
+ * "12,000", "1e6". Returns a finite number (0 for blank/garbage). Lets players
+ * type gold the way the game shows it instead of all the zeroes.
+ */
+export function parseShorthand(input) {
+  if (typeof input === 'number') return Number.isFinite(input) ? input : 0
+  if (!input) return 0
+  const str = String(input).trim().toLowerCase().replace(/[, ]/g, '')
+  const m = str.match(/^(-?\d*\.?\d+)\s*([kmbt])?$/)
+  if (!m) {
+    const n = parseFloat(str)
+    return Number.isFinite(n) ? n : 0
+  }
+  const value = parseFloat(m[1])
+  const mult = { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[m[2]] || 1
+  const out = value * mult
+  return Number.isFinite(out) ? out : 0
 }
 
 /** Pretty integer with thousands separators. */
@@ -147,13 +169,15 @@ export function fmt(n) {
   return (Math.round(v * 100) / 100).toLocaleString('en-US')
 }
 
-/** Compact gold formatting (1.2K, 3.4M, 1.1B). */
+/** Compact gold formatting (1.2K, 3.4M, 1.1B). Trailing zeros are trimmed. */
 export function fmtGold(n) {
   const v = num(n)
   const abs = Math.abs(v)
-  if (abs >= 1e9) return (v / 1e9).toFixed(2).replace(/\.00$/, '') + 'B'
-  if (abs >= 1e6) return (v / 1e6).toFixed(2).replace(/\.00$/, '') + 'M'
-  if (abs >= 1e3) return (v / 1e3).toFixed(1).replace(/\.0$/, '') + 'K'
+  const trim = (x, dp) => String(parseFloat(x.toFixed(dp)))
+  if (abs >= 1e12) return trim(v / 1e12, 2) + 'T'
+  if (abs >= 1e9) return trim(v / 1e9, 2) + 'B'
+  if (abs >= 1e6) return trim(v / 1e6, 2) + 'M'
+  if (abs >= 1e3) return trim(v / 1e3, 1) + 'K'
   return String(Math.round(v))
 }
 

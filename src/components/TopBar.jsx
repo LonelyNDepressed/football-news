@@ -6,7 +6,7 @@ import {
   MAX_HERO_LEVEL,
   MAX_STAGE_LEVEL,
 } from '../data/gameData.js'
-import { fmtGold, num } from '../lib/calculations.js'
+import { fmtGold, num, parseShorthand } from '../lib/calculations.js'
 
 const STAT_FIELDS = [
   { key: 'AttackDamage', label: 'Atk Dmg' },
@@ -16,6 +16,35 @@ const STAT_FIELDS = [
   { key: 'MaxHP', label: 'Max HP' },
   { key: 'Armor', label: 'Armor' },
 ]
+
+// Gold accepts shorthand (1.5m, 250k) while storing a plain number. Keeps a local
+// text buffer so partial input like "1." isn't clobbered mid-type.
+function GoldField({ value, onChange }) {
+  const [text, setText] = useState(() => (value ? String(value) : ''))
+  const [focused, setFocused] = useState(false)
+  const display = focused ? text : value ? fmtGold(value) : ''
+  return (
+    <label className="block">
+      <span className="field-label">Current Gold</span>
+      <input
+        type="text"
+        inputMode="decimal"
+        className="field-input"
+        value={display}
+        placeholder="e.g. 1.5m"
+        onFocus={() => {
+          setFocused(true)
+          setText(value ? String(value) : '')
+        }}
+        onBlur={() => setFocused(false)}
+        onChange={(e) => {
+          setText(e.target.value)
+          onChange(parseShorthand(e.target.value))
+        }}
+      />
+    </label>
+  )
+}
 
 function NumberField({ label, value, onChange, min, max, suffix }) {
   return (
@@ -93,12 +122,7 @@ export default function TopBar({ state, update, toggleHero, setHeroStat, toggleR
           <div className="mt-4 space-y-4">
             {/* Core numeric inputs */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              <NumberField
-                label="Current Gold"
-                value={state.gold}
-                min={0}
-                onChange={(v) => update({ gold: v })}
-              />
+              <GoldField value={num(state.gold)} onChange={(v) => update({ gold: v })} />
               <NumberField
                 label="Hero Level"
                 value={state.heroLevel}
