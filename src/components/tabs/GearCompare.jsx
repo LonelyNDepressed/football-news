@@ -87,7 +87,7 @@ export default function GearCompare() {
                   </span>
                 </>
               ) : (
-                <Badge severity="progress">It's a tie — pick on secondary stats or set bonuses</Badge>
+                <Badge severity="progress">It&apos;s a tie — pick on secondary stats or set bonuses</Badge>
               )}
             </div>
 

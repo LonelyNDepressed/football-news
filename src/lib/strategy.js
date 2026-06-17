@@ -7,7 +7,6 @@ import {
   fmtGold,
   computeDps,
   armorThreshold,
-  clearsFifty,
   runeQueue,
 } from './calculations.js'
 

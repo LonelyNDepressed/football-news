@@ -109,7 +109,7 @@ export default function RuneAdvisor({ state }) {
         <div className="mt-4 rounded-xl border border-navy-700 bg-navy-850/50 p-3 text-sm text-slate-300">
           {goldReachIndex < 0 ? (
             <>
-              Your {fmtGold(gold)}g can't yet cover the next rune ({next ? next.name : '—'}). Farm to
+              Your {fmtGold(gold)}g can&apos;t yet cover the next rune ({next ? next.name : '—'}). Farm to
               at least <span className="font-semibold text-gold-400">{next ? fmtGold(next.cost) : '—'}g</span>.
             </>
           ) : (

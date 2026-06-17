@@ -82,7 +82,7 @@ export default function ItemGuide() {
         </div>
         <p className="mt-3 text-xs text-slate-500">
           Immortal and above (highlighted) are the meaningful Cube/Synthesis milestones — Immortal
-          unlocks Cube Lv10 and Celestial unlocks Cube Lv50. Higher rarity also lifts an item's score
+          unlocks Cube Lv10 and Celestial unlocks Cube Lv50. Higher rarity also lifts an item&apos;s score
           multiplier in the Gear Compare tab.
         </p>
       </Card>

@@ -69,7 +69,7 @@ export default function NextBestAction({ state }) {
             Frontline Armor below the stage threshold (14×stage+12) or HP too thin → farm Armor/HP.
           </Step>
           <Step n={4} label="Economy (stable but broke)">
-            Survivable but can't afford the next structural rune → gold farm.
+            Survivable but can&apos;t afford the next structural rune → gold farm.
           </Step>
           <Step n={5} label="Speed (safe but slow)">
             Survivable and funded but party DPS lags the stage → XP farm to out-level it.
