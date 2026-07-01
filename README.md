@@ -59,9 +59,14 @@ also drops straight onto Netlify/Vercel/any static host — just point them at `
    50%/75% breakpoints, and offline-reward math (8h cap, +10% per Offline rune).
 5. **Rune Advisor** — buy-next, a 6-deep priority queue, affordability, and how far your gold
    stretches down the list.
-6. **Gear Compare** — score two items by weighted combat value (DPS slots weight offense highest)
-   and declare a winner.
-7. **Item Guide** — chest-drop routes and the Cube's 8 operations, plus the rarity ladder.
+6. **Gear Priority** — what to prioritise on each slot type at your current stage, a per-slot stat
+   ranking that shifts from damage-focused to survival-critical as the armor threshold (`14×stage+12`)
+   grows, and a trend table across stages. Also hosts an optional "best specific item per slot"
+   recommender that switches on automatically once a datamined catalog is added to `src/data/items.js`.
+7. **Gear Compare** — score two items by weighted combat value and declare a winner. **Stage-aware:**
+   the same two items can pick a different winner at stage 5 vs stage 80, because survival matters
+   more late.
+8. **Item Guide** — chest-drop routes and the Cube's 8 operations, plus the rarity ladder.
 
 ## Project structure
 
@@ -71,8 +76,10 @@ src/
   lib/calculations.js       # pure game math (DPS, armor, offline, rune queue, formatting)
   lib/strategy.js           # Next Best Action decision tree
   lib/comp.js               # team composition optimizer
+  lib/gear.js               # stage-aware gear scoring & per-slot stat priority
   lib/share.js              # encode/decode builds for share links & import/export
   lib/*.test.js             # Vitest coverage for all of the above
+  data/items.js             # optional item catalog (empty; enables the item recommender)
   hooks/usePlayerState.js   # localStorage-backed player state (+ URL-load, import)
   components/               # TopBar, Footer, ShareBar, ErrorBoundary, UI primitives
   components/tabs/          # one file per tab

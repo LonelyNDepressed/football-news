@@ -10,6 +10,7 @@ import HeroBuilds from './components/tabs/HeroBuilds.jsx'
 import FarmingAdvisor from './components/tabs/FarmingAdvisor.jsx'
 import RuneAdvisor from './components/tabs/RuneAdvisor.jsx'
 import GearCompare from './components/tabs/GearCompare.jsx'
+import GearPriority from './components/tabs/GearPriority.jsx'
 import ItemGuide from './components/tabs/ItemGuide.jsx'
 
 const TABS = [
@@ -18,6 +19,7 @@ const TABS = [
   { id: 'heroes', label: 'Per-Hero Builds', icon: '⚔️', Component: HeroBuilds },
   { id: 'farming', label: 'Farming Advisor', icon: '🌾', Component: FarmingAdvisor },
   { id: 'runes', label: 'Rune Advisor', icon: '🔮', Component: RuneAdvisor },
+  { id: 'priority', label: 'Gear Priority', icon: '📈', Component: GearPriority },
   { id: 'gear', label: 'Gear Compare', icon: '🛡️', Component: GearCompare },
   { id: 'items', label: 'Item Guide', icon: '🧊', Component: ItemGuide },
 ]

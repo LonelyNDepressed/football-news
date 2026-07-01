@@ -1,21 +1,8 @@
 import { useState } from 'react'
 import { GEAR_SLOTS, RARITIES } from '../../data/gameData.js'
-import { num, fmt } from '../../lib/calculations.js'
+import { fmt } from '../../lib/calculations.js'
+import { STAT_DEFS, RARITY_MULT, scoreItem, survivalPressure } from '../../lib/gear.js'
 import { Card, Reasoning, Badge, Meter } from '../ui.jsx'
-
-// Stat fields the comparer scores. baseWeight is the generic value;
-// dpsWeight is used on DPS slots (weapons / offensive off-hands).
-const STAT_DEFS = [
-  { key: 'AttackDamage', label: 'Attack Damage', baseWeight: 1.0, dpsWeight: 2.4 },
-  { key: 'AttackSpeed', label: 'Attack Speed', baseWeight: 1.2, dpsWeight: 3.0 },
-  { key: 'CritChance', label: 'Crit Chance %', baseWeight: 1.5, dpsWeight: 2.8 },
-  { key: 'CritDamage', label: 'Crit Damage %', baseWeight: 0.8, dpsWeight: 1.8 },
-  { key: 'MaxHP', label: 'Max HP', baseWeight: 0.5, dpsWeight: 0.25 },
-  { key: 'Armor', label: 'Armor', baseWeight: 1.4, dpsWeight: 0.4 },
-  { key: 'ElementResist', label: 'Element Resist', baseWeight: 1.1, dpsWeight: 0.3 },
-]
-
-const RARITY_MULT = Object.fromEntries(RARITIES.map((r, i) => [r, 1 + i * 0.15]))
 
 function emptyItem() {
   return {
@@ -26,30 +13,17 @@ function emptyItem() {
   }
 }
 
-function scoreItem(item) {
-  const slot = GEAR_SLOTS.find((s) => s.id === item.slot)
-  const isDps = slot?.dps
-  let raw = 0
-  const breakdown = []
-  for (const d of STAT_DEFS) {
-    const v = num(item.stats[d.key])
-    if (!v) continue
-    const w = isDps ? d.dpsWeight : d.baseWeight
-    const contrib = v * w
-    raw += contrib
-    breakdown.push({ key: d.key, label: d.label, value: v, weight: w, contrib })
-  }
-  breakdown.sort((a, b) => b.contrib - a.contrib)
-  const rarityMult = RARITY_MULT[item.rarity] || 1
-  return { raw, total: raw * rarityMult, rarityMult, breakdown, isDps, slotName: slot?.name }
-}
-
-export default function GearCompare() {
+export default function GearCompare({ state }) {
   const [a, setA] = useState(() => ({ ...emptyItem(), name: 'Item A' }))
   const [b, setB] = useState(() => ({ ...emptyItem(), name: 'Item B' }))
 
-  const sa = scoreItem(a)
-  const sb = scoreItem(b)
+  // Stage-aware: the same two items can pick a different winner at stage 5 vs 80
+  // because survival matters more as the threshold grows.
+  const pressure = survivalPressure(state)
+  const p = pressure.p
+
+  const sa = scoreItem(a, p)
+  const sb = scoreItem(b, p)
   const maxTotal = Math.max(1, sa.total, sb.total)
   const hasData = sa.total > 0 || sb.total > 0
   const winner = sa.total === sb.total ? null : sa.total > sb.total ? 'A' : 'B'
@@ -62,8 +36,21 @@ export default function GearCompare() {
     <div className="space-y-4">
       <Card
         title="Gear compare"
-        subtitle="Enter two items' stats and the strategist scores each by weighted combat value, then declares a winner. DPS slots weight offensive stats much higher."
+        subtitle="Enter two items' stats and the strategist scores each by weighted combat value, then declares a winner."
+        right={
+          <Badge severity={pressure.tone === 'bad' ? 'critical' : pressure.tone === 'good' ? 'optimize' : 'progress'}>
+            Stage {pressure.stage} · {pressure.label}
+          </Badge>
+        }
       >
+        <p className="mb-3 text-xs text-slate-400">
+          Scoring is tuned to your current stage: at{' '}
+          <span className="font-semibold text-slate-200">{pressure.label.toLowerCase()}</span> pressure,
+          {pressure.p >= 0.5
+            ? ' defensive stats (HP/Armor/resist) are weighted up because you are near or under the survival threshold.'
+            : ' offensive stats (Attack Speed/Crit/Damage) are weighted up because you comfortably survive this stage.'}
+          {!pressure.hasStats && ' Enter your heroes’ Armor/HP in the top bar for a personalized read.'}
+        </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <ItemEditor item={a} onChange={setA} score={sa} highlight={winner === 'A'} />
           <ItemEditor item={b} onChange={setB} score={sb} highlight={winner === 'B'} />
@@ -83,7 +70,7 @@ export default function GearCompare() {
                   </Badge>
                   <span className="text-sm text-slate-300">
                     Higher weighted combat value by{' '}
-                    <span className="font-semibold text-gold-400">{margin}%</span>.
+                    <span className="font-semibold text-gold-400">{margin}%</span> at stage {pressure.stage}.
                   </span>
                 </>
               ) : (
@@ -98,9 +85,11 @@ export default function GearCompare() {
 
             <Reasoning
               reasons={[
-                `Each stat is multiplied by a role weight, summed, then scaled by rarity (${RARITIES[0]}=1.0× up to ${RARITIES[RARITIES.length - 1]}=${RARITY_MULT[RARITIES[RARITIES.length - 1]].toFixed(2)}×).`,
-                'On DPS slots (weapons, offensive off-hands) Attack Speed and Crit are weighted ~2-3× because the damage formula multiplies them; HP/Armor are downweighted.',
-                'On armor/jewelry slots, defensive stats (Armor, resist, HP) carry more weight.',
+                `Each stat is multiplied by a stage-aware role weight, summed, then scaled by rarity (${RARITIES[0]}=1.0× up to ${RARITIES[RARITIES.length - 1]}=${RARITY_MULT[RARITIES[RARITIES.length - 1]].toFixed(2)}×).`,
+                'On DPS slots (weapons, offensive off-hands) Attack Speed and Crit are weighted highest because the damage formula multiplies them.',
+                pressure.p >= 0.5
+                  ? `At stage ${pressure.stage} you are ${pressure.label.toLowerCase()} (armor threshold ${pressure.threshold}), so HP/Armor/resist are pulled UP in the scoring.`
+                  : `At stage ${pressure.stage} you survive comfortably, so offensive stats are pulled UP and defense is discounted.`,
                 'No gear lock exists in TBH — always run this comparison before crafting or replacing an equipped item.',
               ]}
             />
@@ -175,7 +164,7 @@ function ItemEditor({ item, onChange, score, highlight }) {
 
       <div className="mt-3 flex items-center justify-between rounded-lg border border-navy-700 bg-navy-900/60 px-3 py-2">
         <span className="text-xs uppercase tracking-wider text-slate-400">
-          Score {score.isDps ? '(DPS-weighted)' : '(defense-weighted)'}
+          Score {score.isDps ? '(DPS slot)' : '(defensive slot)'}
         </span>
         <span className="text-lg font-bold text-gold-400">{fmt(score.total)}</span>
       </div>
