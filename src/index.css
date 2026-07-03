@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-navy-950 text-slate-200 font-sans antialiased;
+    background-image:
+      radial-gradient(circle at 15% -10%, rgba(232, 179, 57, 0.08), transparent 40%),
+      radial-gradient(circle at 90% 0%, rgba(50, 74, 130, 0.25), transparent 45%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-wide;
+  }
+  /* Tidy number inputs */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-navy-700/70 bg-navy-900/70 backdrop-blur p-5 shadow-lg;
+  }
+  .field-label {
+    @apply block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1;
+  }
+  .field-input {
+    @apply w-full rounded-lg border border-navy-700 bg-navy-850 px-3 py-2 text-sm text-slate-100
+           outline-none transition focus:border-gold-500 focus:ring-1 focus:ring-gold-500/60;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium;
+  }
+  .pill {
+    @apply rounded-lg border border-navy-700 bg-navy-850/80 px-3 py-2 text-sm;
+  }
+  .stat-bar-track {
+    @apply h-2 w-full overflow-hidden rounded-full bg-navy-800;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b1124;
+}
+::-webkit-scrollbar-thumb {
+  background: #243766;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #324a82;
+}
